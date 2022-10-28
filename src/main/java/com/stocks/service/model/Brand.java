@@ -7,7 +7,9 @@ import java.util.Set;
 @Table(name = "tbl_brands")
 public class Brand {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    @SequenceGenerator(name="seq-gen-brand",sequenceName="SEQ_GEN_BRAND",initialValue = 1,allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen-brand")
     @Column(name = "brand_id", nullable = false)
     private Long brandId;
 
@@ -16,6 +18,13 @@ public class Brand {
 
     @OneToMany(targetEntity = Product.class, mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Product> products;
+
+    public Brand() {
+    }
+
+    public Brand(String brandName) {
+        this.brandName = brandName;
+    }
 
     public Long getBrandId() {
         return brandId;

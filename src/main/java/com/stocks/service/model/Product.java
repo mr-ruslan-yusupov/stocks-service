@@ -8,7 +8,9 @@ import java.util.Set;
 @Table(name = "tbl_products")
 public class Product {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    @SequenceGenerator(name="seq-gen-product",sequenceName="SEQ_GEN_PRODUCT",initialValue = 1,allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen-product")
     @Column(name = "product_id", nullable = false)
     private Long productId;
 

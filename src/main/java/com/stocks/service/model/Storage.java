@@ -7,7 +7,9 @@ import java.util.Set;
 @Table(name = "tbl_storages")
 public class Storage {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    @SequenceGenerator(name="seq-gen-storage",sequenceName="SEQ_GEN_STORAGE",initialValue = 1,allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen-storage")
     @Column(name = "storage_id", nullable = false)
     private Long storageId;
 
@@ -19,6 +21,14 @@ public class Storage {
 
     @OneToMany(mappedBy = "storage")
     private Set<Stock> stocks;
+
+    public Storage() {
+    }
+
+    public Storage(String storageName, String storageAddress) {
+        this.storageName = storageName;
+        this.storageAddress = storageAddress;
+    }
 
     public Long getStorageId() {
         return storageId;

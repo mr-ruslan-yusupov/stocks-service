@@ -1,3 +1,5 @@
+CREATE SEQUENCE hibernate_sequence START 1;
+
 -- Table: store_stocks.tbl_storages
 CREATE TABLE IF NOT EXISTS store_stocks.tbl_storages
 (

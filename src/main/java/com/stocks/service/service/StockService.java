@@ -1,27 +1,26 @@
 package com.stocks.service.service;
 
+import com.stocks.service.model.Product;
+import com.stocks.service.model.Stock;
 import com.stocks.service.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class StockService {
-    final private BrandRepository brandRepository;
-    final private CategoryRepository categoryRepository;
-    final private ProductRepository productRepository;
     final private StockRepository stockRepository;
-    final private StorageRepository storageRepository;
 
-    public StockService(BrandRepository brandRepository,
-                        CategoryRepository categoryRepository,
-                        ProductRepository productRepository,
-                        StockRepository stockRepository,
-                        StorageRepository storageRepository)
-    {
-        this.brandRepository = brandRepository;
-        this.categoryRepository = categoryRepository;
-        this.productRepository = productRepository;
+    public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
-        this.storageRepository = storageRepository;
+    }
+
+    public Collection<Stock> findAll() {
+        return stockRepository.findAll();
+    }
+
+    public Stock saveOrUpdate(Stock stock) {
+        return stockRepository.saveAndFlush(stock);
     }
 
 }
