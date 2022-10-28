@@ -1,9 +1,6 @@
 package com.stocks.service;
 
-import com.stocks.service.model.Brand;
-import com.stocks.service.model.Category;
-import com.stocks.service.model.Product;
-import com.stocks.service.model.Storage;
+import com.stocks.service.model.*;
 import com.stocks.service.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,46 +38,57 @@ public class StocksServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (brandService.findAll().isEmpty()) {
+		if (brandService.findAllBrands().isEmpty()) {
 			Brand brand1 = new Brand("HP");
-			brandService.saveOrUpdate(brand1);
+			brandService.saveOrUpdateBrand(brand1);
 
 			Brand brand2 = new Brand("Samsung");
-			brandService.saveOrUpdate(brand2);
+			brandService.saveOrUpdateBrand(brand2);
 
 			Brand brand3 = new Brand("Logitech");
-			brandService.saveOrUpdate(brand3);
+			brandService.saveOrUpdateBrand(brand3);
 		}
 
-		if (categoryService.findAll().isEmpty()) {
+		if (categoryService.findAllCategories().isEmpty()) {
 			Category category1 = new Category("Desktop Computers");
-			categoryService.saveOrUpdate(category1);
+			categoryService.saveOrUpdateCategory(category1);
 
 			Category category2 = new Category("Smartphones");
-			categoryService.saveOrUpdate(category2);
+			categoryService.saveOrUpdateCategory(category2);
 
 			Category category3 = new Category("Keyboards");
-			categoryService.saveOrUpdate(category3);
+			categoryService.saveOrUpdateCategory(category3);
 		}
 
-		if (storageService.findAll().isEmpty()) {
+		if (storageService.findAllStorages().isEmpty()) {
 			Storage storage1 = new Storage("Storage Haifa","Haifa");
-			storageService.saveOrUpdate(storage1);
+			storageService.saveOrUpdateStorage(storage1);
 
 			Storage storage2 = new Storage("Storage Tel-aviv","Tel-aviv");
-			storageService.saveOrUpdate(storage2);
+			storageService.saveOrUpdateStorage(storage2);
 
 			Storage storage3 = new Storage("Storage Jerusalem","Jerusalem");
-			storageService.saveOrUpdate(storage3);
+			storageService.saveOrUpdateStorage(storage3);
 		}
 
-//		Product product = new Product();
-//		product.setCategory(catComputerDesktop);
-//		product.setBrand(brandHP);
-//		product.setProductName("Desktop HP Pavilion Gaming TG01-2005nj");
-//		product.setProductDescription("מחשב נייח מבית HP בעל מעבד AMD Ryzen 7 5700G, זכרון בנפח 16GB, כונן קשיח מהיר בנפח 1TB SSD ומאיץ גרפי Nvidia GeForce RTX 3060Ti.");
-//		product.setProductPrice(BigDecimal.valueOf(5449));
+		if (productService.findAllProducts().isEmpty()) {
+			Product product = new Product();
+			product.setCategory(categoryService.findCategoryByName("Desktop Computers"));
+			product.setBrand(brandService.findBrandByName("HP"));
+			product.setProductName("Desktop HP Pavilion Gaming TG01-2005nj");
+			product.setProductDescription("מחשב נייח מבית HP בעל מעבד AMD Ryzen 7 5700G, זכרון בנפח 16GB, כונן קשיח מהיר בנפח 1TB SSD ומאיץ גרפי Nvidia GeForce RTX 3060Ti.");
+			product.setCatalogNumber("HP-TG01-2005NJ");
+			product.setProductPrice(BigDecimal.valueOf(5449));
+			productService.saveOrUpdateProduct(product);
+		}
 
-		//stockService.saveOrUpdateProduct(product);
+		if (stockService.findAllStocks().isEmpty()) {
+			Stock stock = new Stock();
+			stock.setProduct(productService.findProductByCatalogNumber("HP-TG01-2005NJ"));
+			stock.setStorage(storageService.findStorageByName("Storage Haifa"));
+			stock.setQuantity(15);
+			stockService.saveOrUpdateStock(stock);
+		}
+
 	}
 }

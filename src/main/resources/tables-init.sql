@@ -44,8 +44,9 @@ CREATE TABLE IF NOT EXISTS store_stocks.tbl_products
 (
     product_id bigint NOT NULL,
     product_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    product_description character varying(150) COLLATE pg_catalog."default" NOT NULL,
-    product_price money NOT NULL,
+    product_description character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    product_price decimal NOT NULL,
+    catalog_number character varying(25),
     category_id bigint NOT NULL DEFAULT (0),
     brand_id bigint NOT NULL DEFAULT (0),
     CONSTRAINT tbl_products_pkey PRIMARY KEY (product_id),

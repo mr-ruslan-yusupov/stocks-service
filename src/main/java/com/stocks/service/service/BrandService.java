@@ -14,11 +14,15 @@ public class BrandService {
         this.brandRepository = brandRepository;
     }
 
-    public Collection<Brand> findAll() {
+    public Collection<Brand> findAllBrands() {
         return brandRepository.findAll();
     }
 
-    public Brand saveOrUpdate(Brand brand) {
+    public Brand findBrandByName(String brandName) {
+        return brandRepository.findBrandByBrandName(brandName);
+    }
+
+    public Brand saveOrUpdateBrand(Brand brand) {
         return brandRepository.saveAndFlush(brand);
     }
 }

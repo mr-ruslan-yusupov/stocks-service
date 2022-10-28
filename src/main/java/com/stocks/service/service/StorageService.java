@@ -14,11 +14,15 @@ public class StorageService {
         this.storageRepository = storageRepository;
     }
 
-    public Collection<Storage> findAll() {
+    public Collection<Storage> findAllStorages() {
         return storageRepository.findAll();
     }
 
-    public Storage saveOrUpdate(Storage storage) {
+    public Storage findStorageByName(String storageName) {
+        return storageRepository.findStorageByStorageName(storageName);
+    }
+
+    public Storage saveOrUpdateStorage(Storage storage) {
         return storageRepository.saveAndFlush(storage);
     }
 

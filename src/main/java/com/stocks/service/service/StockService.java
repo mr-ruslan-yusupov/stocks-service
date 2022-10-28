@@ -1,6 +1,5 @@
 package com.stocks.service.service;
 
-import com.stocks.service.model.Product;
 import com.stocks.service.model.Stock;
 import com.stocks.service.repository.*;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,11 @@ public class StockService {
         this.stockRepository = stockRepository;
     }
 
-    public Collection<Stock> findAll() {
+    public Collection<Stock> findAllStocks() {
         return stockRepository.findAll();
     }
 
-    public Stock saveOrUpdate(Stock stock) {
+    public Stock saveOrUpdateStock(Stock stock) {
         return stockRepository.saveAndFlush(stock);
     }
 

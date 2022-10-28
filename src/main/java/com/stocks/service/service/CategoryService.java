@@ -14,11 +14,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Collection<Category> findAll() {
+    public Collection<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
-    public Category saveOrUpdate(Category category) {
+    public Category findCategoryByName(String categoryName) {
+        return categoryRepository.findCategoryByCategoryName(categoryName);
+    }
+
+    public Category saveOrUpdateCategory(Category category) {
         return categoryRepository.saveAndFlush(category);
     }
 

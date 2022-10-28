@@ -14,11 +14,15 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Collection<Product> findAll() {
+    public Collection<Product> findAllProducts() {
         return productRepository.findAll();
     }
 
-    public Product saveOrUpdate(Product product) {
+    public Product findProductByCatalogNumber(String catalogNumber) {
+        return productRepository.findProductByCatalogNumber(catalogNumber);
+    }
+
+    public Product saveOrUpdateProduct(Product product) {
         return productRepository.saveAndFlush(product);
     }
 }

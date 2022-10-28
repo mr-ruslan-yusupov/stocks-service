@@ -23,6 +23,9 @@ public class Product {
     @Column(name = "product_price", nullable = false)
     private BigDecimal productPrice;
 
+    @Column(name = "catalog_number", nullable = false)
+    private String catalogNumber;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
@@ -66,6 +69,14 @@ public class Product {
         this.productPrice = productPrice;
     }
 
+    public String getCatalogNumber() {
+        return catalogNumber;
+    }
+
+    public void setCatalogNumber(String catalogNumber) {
+        this.catalogNumber = catalogNumber;
+    }
+
     public Brand getBrand() {
         return brand;
     }
@@ -81,4 +92,5 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }
