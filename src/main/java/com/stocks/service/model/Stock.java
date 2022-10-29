@@ -3,9 +3,10 @@ package com.stocks.service.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "tbl_stocks")
 public class Stock {
     @EmbeddedId
-    StockCompositeKey id;
+    StockCompositeKey id = new StockCompositeKey();
 
     @ManyToOne
     @MapsId("productId")
