@@ -1,5 +1,8 @@
 package com.stocks.service.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,7 +16,7 @@ public class Brand {
     @Column(name = "brand_id", nullable = false)
     private Long brandId;
 
-    @Column(name = "brand_name", nullable = false)
+    @Column(name = "brand_name", nullable = false, unique = true, updatable = false)
     private String brandName;
 
     @OneToMany(targetEntity = Product.class, mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -40,6 +43,18 @@ public class Brand {
 
     public void setBrandName(String brandName) {
         this.brandName = brandName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Brand brand)) return false;
+        return new EqualsBuilder().append(getBrandName(), brand.getBrandName()).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getBrandName()).toHashCode();
     }
 
 }

@@ -1,5 +1,8 @@
 package com.stocks.service.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,10 +16,10 @@ public class Storage {
     @Column(name = "storage_id", nullable = false)
     private Long storageId;
 
-    @Column(name = "storage_name", nullable = false)
+    @Column(name = "storage_name", nullable = false, unique = true, updatable = false)
     private String storageName;
 
-    @Column(name = "storage_address", nullable = false)
+    @Column(name = "storage_address", nullable = false, unique = true, updatable = false)
     private String storageAddress;
 
     @OneToMany(mappedBy = "storage")
@@ -54,4 +57,15 @@ public class Storage {
         this.storageAddress = storageAddress;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Storage storage)) return false;
+        return new EqualsBuilder().append(getStorageName(), storage.getStorageName()).append(getStorageAddress(), storage.getStorageAddress()).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getStorageName()).append(getStorageAddress()).toHashCode();
+    }
 }

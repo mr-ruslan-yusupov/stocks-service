@@ -1,5 +1,8 @@
 package com.stocks.service.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +13,12 @@ public class Stock {
 
     @ManyToOne
     @MapsId("productId")
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private Product product;
 
     @ManyToOne
     @MapsId("storageId")
-    @JoinColumn(name = "storage_id")
+    @JoinColumn(name = "storage_id", nullable = false, updatable = false)
     private Storage storage;
 
     private int quantity;
@@ -50,5 +53,17 @@ public class Stock {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Stock stock)) return false;
+        return new EqualsBuilder().append(getProduct(), stock.getProduct()).append(getStorage(), stock.getStorage()).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getProduct()).append(getStorage()).toHashCode();
     }
 }

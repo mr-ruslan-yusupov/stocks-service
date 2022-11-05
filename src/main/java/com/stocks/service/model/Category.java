@@ -1,5 +1,8 @@
 package com.stocks.service.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,7 +16,7 @@ public class Category {
     @Column(name = "category_id", nullable = false)
     private Long categoryId;
 
-    @Column(name = "category_name", nullable = false)
+    @Column(name = "category_name", nullable = false, unique = true, updatable = false)
     private String categoryName;
 
     @OneToMany(targetEntity = Product.class, mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -42,4 +45,15 @@ public class Category {
         this.categoryName = categoryName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category category)) return false;
+        return new EqualsBuilder().append(getCategoryName(), category.getCategoryName()).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getCategoryName()).toHashCode();
+    }
 }

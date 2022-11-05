@@ -1,5 +1,8 @@
 package com.stocks.service.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
@@ -14,7 +17,7 @@ public class Product {
     @Column(name = "product_id", nullable = false)
     private Long productId;
 
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_name", nullable = false, unique = true, updatable = false)
     private String productName;
 
     @Column(name = "product_description", nullable = false)
@@ -23,7 +26,7 @@ public class Product {
     @Column(name = "product_price", nullable = false)
     private BigDecimal productPrice;
 
-    @Column(name = "catalog_number", nullable = false)
+    @Column(name = "catalog_number", nullable = false, unique = true, updatable = false)
     private String catalogNumber;
 
     @ManyToOne
@@ -93,4 +96,15 @@ public class Product {
         this.category = category;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+        return new EqualsBuilder().append(getProductName(), product.getProductName()).append(getCatalogNumber(), product.getCatalogNumber()).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getProductName()).append(getCatalogNumber()).toHashCode();
+    }
 }
