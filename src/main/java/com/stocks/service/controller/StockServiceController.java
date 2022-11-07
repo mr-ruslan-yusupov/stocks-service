@@ -1,8 +1,17 @@
 package com.stocks.service.controller;
 
+import com.stocks.service.model.Brand;
 import com.stocks.service.service.*;
+import com.store.util.StoreConstants;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +45,7 @@ public class StockServiceController {
         this.stockService = stockService;
     }
 
-    @RequestMapping(value = {"/","/stock"}, produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value = {"/","/stocks-service"}, produces = MediaType.TEXT_PLAIN_VALUE)
     public String home() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n[Application info]");
@@ -46,5 +55,23 @@ public class StockServiceController {
         return sb.toString();
     }
 
+    @PostMapping(value = "/stocks-service/brand/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addBrand(@RequestBody Brand brand) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            Brand savedBrand = brandService.saveOrUpdateBrand(brand);
+            jsonObject.put("status", StoreConstants.SUCCESS_STATUS);
+            jsonObject.put("message", "Brand " + savedBrand.getBrandName() + " saved successfully");
+            return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+        } catch (JSONException e) {
+            try {
+                jsonObject.put("status", StoreConstants.FAILURE_STATUS);
+                jsonObject.put("exception", e.getMessage());
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+        }
+    }
 
 }

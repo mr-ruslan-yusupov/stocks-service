@@ -13,6 +13,7 @@ public class StockSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         //http.authorizeRequests().antMatchers("/**").hasRole("USER").and().formLogin();
         http.authorizeRequests().anyRequest().permitAll();
+        http.csrf().disable();
         return http.build();
     }
 
